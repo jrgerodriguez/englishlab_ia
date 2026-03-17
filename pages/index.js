@@ -45,7 +45,7 @@ export default function Home() {
   const [input, setInput] = useState("");
   const [isTyping, setIsTyping] = useState(false);
   
-  const [timeLeft, setTimeLeft] = useState(120);
+  const [timeLeft, setTimeLeft] = useState(240);
   const [sessionActive, setSessionActive] = useState(false);
   const [evaluating, setEvaluating] = useState(false);
   const [results, setResults] = useState(null);
@@ -75,7 +75,7 @@ export default function Home() {
     setEvaluating(false);
     setStarted(true);
     setSessionActive(true);
-    setTimeLeft(120);
+    setTimeLeft(240);
     setInput("");
 
     const key = `${sc}_${lvl}`;
