@@ -1,5 +1,6 @@
 import Head from "next/head";
 import { useState, useRef, useEffect } from "react";
+import { useRouter } from "next/router";
 import styles from "../styles/Home.module.css";
 import { levelNames, levelColors, scenarios, systemPrompts, openingMessages, evaluationPrompt } from "../data/config";
 
@@ -34,6 +35,8 @@ function ScoreIndicator({ value, color, size = 80 }) {
 // ----- Main Page Component -----
 
 export default function Home() {
+  const router = useRouter();
+  const [mode, setMode] = useState("home"); // "home", "chat", "grammar"
   const [level, setLevel] = useState("easy");
   const [scenario, setScenario] = useState("hotel");
   
@@ -221,16 +224,21 @@ export default function Home() {
              </div>
           </div>
 
-          <button className={styles.startBtn} onClick={() => { setResults(null); setStarted(false); }}>
-            Start New Session
-          </button>
+          <div style={{ display: "flex", gap: 12 }}>
+            <button className={styles.startBtn} onClick={() => { setResults(null); setStarted(false); setMode("home"); }}>
+              Back to Home
+            </button>
+            <button className={styles.startBtn} onClick={() => { setResults(null); setStarted(false); setMode("chat"); }}>
+              New Session
+            </button>
+          </div>
         </div>
       </div>
     );
   }
 
-  // View: Start Screen
-  if (!started) {
+  // View: Start Screen (Mode Selection)
+  if (!started && mode === "home") {
     return (
       <>
         <Head><title>EnglishLab AI</title></Head>
@@ -240,6 +248,50 @@ export default function Home() {
             <div className={styles.header}>
               <div className={styles.iconWrapper}>✨</div>
               <h1 className={styles.title}>EnglishLab AI</h1>
+              <p className={styles.subtitle}>Immersive AI-driven English training platform.</p>
+            </div>
+
+            <div className={styles.section}>
+              <div className={styles.sectionLabel}>Choose Your Practice Mode</div>
+              <div className={styles.gridOptions}>
+                <button onClick={() => setMode("chat")} className={styles.gridBtn}>
+                  <span className={styles.gridBtnIcon}>💬</span>
+                  <div>
+                    <div style={{ fontWeight: 600, marginBottom: 4 }}>Chat Practice</div>
+                    <div style={{ fontSize: 13, color: "#94a3b8" }}>Roleplay conversations with AI customers</div>
+                  </div>
+                </button>
+                <button onClick={() => router.push("/grammar")} className={styles.gridBtn}>
+                  <span className={styles.gridBtnIcon}>📝</span>
+                  <div>
+                    <div style={{ fontWeight: 600, marginBottom: 4 }}>Grammar Tests</div>
+                    <div style={{ fontSize: 13, color: "#94a3b8" }}>Practice tenses, conditionals, and more</div>
+                  </div>
+                </button>
+              </div>
+            </div>
+
+            <div className={styles.infoBox}>
+              Choose between <strong>interactive chat practice</strong> or <strong>grammar exercises</strong> to improve your English skills.
+            </div>
+
+          </div>
+        </div>
+      </>
+    );
+  }
+
+  // View: Chat Setup Screen
+  if (!started && mode === "chat") {
+    return (
+      <>
+        <Head><title>EnglishLab AI - Chat Practice</title></Head>
+        <div className={styles.container}>
+          <div className={styles.card}>
+            
+            <div className={styles.header}>
+              <div className={styles.iconWrapper}>💬</div>
+              <h1 className={styles.title}>Chat Practice</h1>
               <p className={styles.subtitle}>Immersive AI-driven call center training.</p>
             </div>
 
@@ -270,9 +322,14 @@ export default function Home() {
               You have <strong>2 minutes</strong> to assist the customer. Respond professionally to earn a high score.
             </div>
 
-            <button className={styles.startBtn} onClick={() => startSession(level, scenario)}>
-              Initialize Session
-            </button>
+            <div style={{ display: "flex", gap: 12 }}>
+              <button className={styles.endBtn} onClick={() => setMode("home")} style={{ flex: 1 }}>
+                ← Back
+              </button>
+              <button className={styles.startBtn} onClick={() => startSession(level, scenario)} style={{ flex: 2 }}>
+                Initialize Session
+              </button>
+            </div>
 
           </div>
         </div>

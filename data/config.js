@@ -60,3 +60,37 @@ Return a JSON object with this exact structure, no extra text:
   "strongPoint": "<una cosa que hicieron bien, en español>",
   "improvementTip": "<un consejo específico para mejorar, en español>"
 }`;
+
+// --- Grammar Test Data ---
+
+export const grammarTopics = {
+  tenses: { label: "Verb Tenses", icon: "⏳" },
+  conditionals: { label: "Conditionals", icon: "🔀" },
+  prepositions: { label: "Prepositions", icon: "📍" },
+  phrasal: { label: "Phrasal Verbs", icon: "🧩" },
+  articles: { label: "Articles & Nouns", icon: "📚" }
+};
+
+export const questionAmounts = [10, 15, 20];
+
+export const grammarTestPrompt = `You are an expert English grammar teacher.
+Generate a JSON array of {amount} grammar questions on the topic of "{topic}".
+The questions should be a mix of "multiple-choice" and "fill-in-the-blank".
+
+IMPORTANT: Return strictly a valid JSON array and nothing else.
+
+Format:
+[
+  {
+    "type": "multiple-choice",
+    "question": "If I ___ you, I would study more.",
+    "options": ["was", "were", "am", "be"],
+    "correctAnswer": "were"
+  },
+  {
+    "type": "fill-in-the-blank",
+    "question": "She has been living here ___ 10 years.",
+    "correctAnswer": "for"
+  }
+]`;
+
