@@ -74,8 +74,17 @@ export const grammarTopics = {
 export const questionAmounts = [10, 15, 20];
 
 export const grammarTestPrompt = `You are an expert English grammar teacher.
-Generate a JSON array of {amount} grammar questions on the topic of "{topic}".
+Generate a JSON array of {amount} COMPLETELY NEW and UNIQUE grammar questions on the topic of "{topic}".
 The questions should be a mix of "multiple-choice" and "fill-in-the-blank".
+
+CRITICAL INSTRUCTIONS:
+- Create DIFFERENT questions every single time, never repeat the same examples
+- Use varied vocabulary, contexts, and sentence structures
+- Mix different sub-topics within the main topic
+- Vary the difficulty and complexity of questions
+- Use diverse real-world contexts (work, travel, daily life, etc.)
+- For multiple choice, randomize the order of correct answers
+- Make questions practical and relevant to English learners
 
 IMPORTANT: Return strictly a valid JSON array and nothing else.
 

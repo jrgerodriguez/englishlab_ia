@@ -22,15 +22,20 @@ export default function GrammarTest() {
     setStarted(true);
     
     try {
+      // Add timestamp and random seed to ensure unique questions every time
+      const timestamp = new Date().toISOString();
+      const randomSeed = Math.random().toString(36).substring(7);
+      
       const prompt = grammarTestPrompt
         .replace("{amount}", amount)
-        .replace("{topic}", grammarTopics[topic].label);
+        .replace("{topic}", grammarTopics[topic].label) + 
+        `\n\nGeneration ID: ${timestamp}-${randomSeed}\nEnsure these questions are completely different from any previous generation.`;
 
       const res = await fetch("/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          system: "You are a helpful English grammar test generator. Return only valid JSON.",
+          system: "You are a helpful English grammar test generator. Return only valid JSON. Create unique questions every time, never repeat examples.",
           messages: [{ role: "user", content: prompt }],
         }),
       });
